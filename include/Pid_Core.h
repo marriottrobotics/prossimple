@@ -1,5 +1,6 @@
 /**This should be a rough port of the RobotC code.*/
-#include "main.h"
+//#include "main.h"
+#include "Sensors.h"
 
 #define LIMIT(x, min, max) (((x) <= (max)) ? (((x) >= (min)) ? (x) : (min)) : (max))
 #define ABS(x) (((x) >= 0) ? (x) : (-(x)))
@@ -10,7 +11,8 @@
 
 struct pid {
     /**TODO Sensor Integration*/
-    int ime_port; //TODO Different sensors.
+    //int ime_port; //TODO Different sensors.
+    struct Sensor *sensor;
 	int mport;
 	long mtarget;
 	float pgain;
@@ -28,7 +30,8 @@ struct pid {
 //Initalizes basic variables for the pid struct provided.
 void pid_init(struct pid *p) {
 //	nMotorEncoder[p->mport] = 0;
-    imeReset(p->ime_port);
+    //imeReset(p->ime_port);
+    //TODO SensorReset
 	p->mtarget = 0;
 	p->pgain = 0.70;
 	p->corrcap = 30;
@@ -45,7 +48,8 @@ bool pid_ontarget(struct pid *p)
 {
 	//return ABS(p->mtarget - nMotorEncoder[p->mport]) < 64;
     int ime;
-    imeGet(p->ime_port, &ime);
+    readValue(p->sensor);
+    //imeGet(p->ime_port, &ime);
     return ABS(p->mtarget - ime) < 64;
 }
 
@@ -58,11 +62,7 @@ void pid_update(struct pid *p) {
 
 	//Calculate initial values
 	//int enc = nMotorEncoder[p->mport];
-    int enc;
-    bool success = imeGet(p->ime_port, &enc); //Encoder value
-    if(!success){
-        //Debug Something is wrong.
-    }
+    int enc = readValue(p->sensor);
 
 	//Calculate err using the modified enc value and the target.
 	long err = p->mtarget - enc;
@@ -140,7 +140,7 @@ void wait_ontarget(struct pid *p)
 		//writeDebugStreamLine("In loop with orig_pos %d and last_pos %d", orig_pos, last_pos);
 
 		//last_pos = nMotorEncoder[p->mport];
-        imeGet(p->ime_port, &last_pos);
+        last_pos = readValue(p->sensor);
         delay(25);
 
 		// if we get stuck, stop waiting
