@@ -1,4 +1,6 @@
 /**This should be a rough port of the RobotC code.*/
+#pragma once
+
 //#include "main.h"
 #include "Sensors.h"
 
@@ -6,6 +8,12 @@
 #define ABS(x) (((x) >= 0) ? (x) : (-(x)))
 #define LOWPASS(x, n) (((ABS((x))) >= (n) || (x) <= (-(n))) ? (true) : (false))
 #define SIGN(x) (((x) >= 0) ? (1) : (-1))
+
+#define DEBUG_MODE
+
+#ifdef DEBUG_MODE
+#define DEBUG(x) print(&x);
+#endif
 
 //TODO Define debug w/ debug mode
 
@@ -47,8 +55,7 @@ void pid_init(struct pid *p) {
 bool pid_ontarget(struct pid *p)
 {
 	//return ABS(p->mtarget - nMotorEncoder[p->mport]) < 64;
-    int ime;
-    readValue(p->sensor);
+    int ime = readValue(p->sensor);
     //imeGet(p->ime_port, &ime);
     return ABS(p->mtarget - ime) < 64;
 }

@@ -4,6 +4,7 @@ Please call imeInitalizeAll() first.*/
 //TODO Implement in Pid_Core
 
 //FIXME prevent duplication
+#pragma once
 //#include "main.h"
 #include <API.h>
 
