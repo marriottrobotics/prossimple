@@ -31,7 +31,7 @@
  */
 void operatorControl() {
 	while (1) {
-		
+		debugPid.mtarget = joystickGetAnalog(JOY_LEFT, ACCEL_X);
 		delay(20);
 	}
 }

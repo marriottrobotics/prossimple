@@ -40,5 +40,11 @@ void initializeIO() {
 void initialize() {
     imeInitializeAll();
 
-    //TaskHandle pid_loop_task = taskRunLoop(pid_run_loops, 10);
+    debugPid.mport = 2;
+    debugPid.sensor = ime(0);
+
+    pid_arr[pid_count++] = &debugPid;
+
+    /*The last thing that should happen, the repeating task starts.*/
+    TaskHandle pid_loop_task = taskRunLoop(pid_run_loops, 10);
 }
