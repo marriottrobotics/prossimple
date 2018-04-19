@@ -40,9 +40,5 @@ void initializeIO() {
 void initialize() {
     imeInitializeAll();
 
-    debugPid.mport = 2;
-    //debugPid.ime_port = 0;
-    pid_arr[pid_count++]=&debugPid;
-    //Call this last
-    TaskHandle pid_loop_task = taskRunLoop(pid_run_loops, 10);
+    //TaskHandle pid_loop_task = taskRunLoop(pid_run_loops, 10);
 }

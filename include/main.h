@@ -26,6 +26,7 @@
 #define MAIN_H_
 
 #include <API.h>
+
 #include "Pid_Core.h"
 
 // Allow usage of this file in C++ programs
@@ -35,8 +36,6 @@ extern "C" {
 
 // A function prototype looks exactly like its declaration, but with a semicolon instead of
 // actual code. If a function does not match a prototype, compile errors will occur.
-
-struct pid debugPid;
 
 // Prototypes for initialization, operator control and autonomous
 
