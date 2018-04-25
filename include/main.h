@@ -38,7 +38,12 @@ extern "C" {
 // actual code. If a function does not match a prototype, compile errors will occur.
 
 // Prototypes for initialization, operator control and autonomous
+
+//Pids for control
 struct pid debugPid;
+
+//Convienience for accessing pid targets
+#define DEBUG_PID debugPid.mtarget
 
 /**
  * Runs the user autonomous code. This function will be started in its own task with the default

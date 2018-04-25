@@ -8,11 +8,8 @@
 #define LOWPASS(x, n) (((ABS((x))) >= (n) || (x) <= (-(n))) ? (true) : (false))
 #define SIGN(x) (((x) >= 0) ? (1) : (-1))
 
-#define DEBUG_MODE
-
-#ifdef DEBUG_MODE
-#define DEBUG(x) print(&x);
-#endif
+//The task for the loop running
+extern TaskHandle pid_loop;
 
 struct pid {
     /**TODO Sensor Integration*/

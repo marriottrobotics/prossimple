@@ -19,8 +19,10 @@ int readValue(struct Sensor *input){
     int value = 0;
     if(input->sensorType == IME){
         imeGet(input->port, &value);
+        value*=-1;
     }else if(input->sensorType == QENC){
         value = encoderGet(qencoders[input->port]);
+        value*=-1;
     }else if(input->sensorType == POT){
         value = analogRead(input->port);
     }
@@ -41,6 +43,7 @@ struct Sensor *ime(int addr){
     struct Sensor ns;
     ns.port = addr;
     ns.sensorType = IME;
+    imeReset(ns.port);
     sensors[sensor_count++]=ns;
     return &sensors[sensor_count-1];
 }
@@ -49,7 +52,8 @@ struct Sensor *qenc(unsigned char portTop, unsigned char portBottom){
     qencoders[encoder_count++] = encoderInit(portTop, portBottom, false);
     struct Sensor ns;
     ns.port = encoder_count-1;
-    ns.sensorType =QENC;
+    ns.sensorType = QENC;
+    encoderReset(qencoders[ns.port]);
     sensors[sensor_count++]=ns;
     return &sensors[sensor_count-1];
 }

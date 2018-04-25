@@ -5,7 +5,7 @@
 
 #include "Pid_Core.h"
 
-//TODO Define debug w/ debug mode
+TaskHandle pid_loop;
 
 //Initalizes basic variables for the pid struct provided.
 void pid_init(struct pid *p) {
@@ -43,6 +43,8 @@ void pid_update(struct pid *p) {
 	//int enc = nMotorEncoder[p->mport];
     int enc = readValue(p->sensor);
 
+	//printf("enc %d", enc);
+
 	//Calculate err using the modified enc value and the target.
 	long err = p->mtarget - enc;
 
@@ -50,6 +52,7 @@ void pid_update(struct pid *p) {
 	float corr = err * p->pgain;
 
 	//I Component
+#if 1
 	p->isum+=err;
 	if(p->isum >= p->ilimit){
 		p->isum = p->ilimit;
@@ -62,7 +65,10 @@ void pid_update(struct pid *p) {
 	}
 
 	corr += p->isum * p->igain;
+#endif
 
+printf("\n Corr %f", corr);
+	//printf("\n Pid at update with %e power Sensor at %ld target at %ld", corr, enc, p->mtarget);
 	//writeDebugStreamLine("Powering motor at %d", corr);
 	//motor[p->mport] = corr;
     motorSet(p->mport, corr);
@@ -84,12 +90,13 @@ void pid_init_all()
 
 //A task to be run on the scheduler
 void pid_run_loops() {
+	//print(" \n Run Loops");
 //	while(1) {
-		for (int i = 0; i < pid_count; ++i) {
-			if(pid_arr[i]->enable) {
-				pid_update(pid_arr[i]);
-			}
+	for (int i = 0; i < pid_count; ++i) {
+		if(pid_arr[i]->enable) {
+			pid_update(pid_arr[i]);
 		}
+	}
     //    delay(10);
 	//}
 };

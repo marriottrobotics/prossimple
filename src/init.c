@@ -38,13 +38,15 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-    imeInitializeAll();
+    int imeCount = imeInitializeAll();
+    printf("Ime system initalized with %d imes", imeCount);
 
     debugPid.mport = 2;
-    debugPid.sensor = ime(0);
+    debugPid.sensor = qenc(1, 2);
 
     pid_arr[pid_count++] = &debugPid;
 
+    pid_init_all();
     /*The last thing that should happen, the repeating task starts.*/
-    TaskHandle pid_loop_task = taskRunLoop(pid_run_loops, 10);
+    pid_loop = taskRunLoop(pid_run_loops, 10);
 }
