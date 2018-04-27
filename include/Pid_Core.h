@@ -8,6 +8,9 @@
 #define LOWPASS(x, n) (((ABS((x))) >= (n) || (x) <= (-(n))) ? (true) : (false))
 #define SIGN(x) (((x) >= 0) ? (1) : (-1))
 
+#define P_COMPONENT
+#define I_COMPONENT
+
 //The task for the loop running
 extern TaskHandle pid_loop;
 

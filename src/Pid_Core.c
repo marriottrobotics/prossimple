@@ -52,8 +52,11 @@ void pid_update(struct pid *p) {
 	long err = p->mtarget - enc;
 
 	//P Component
+#ifdef P_COMPONENT
 	float corr = err * p->pgain;
+#endif
 
+#ifdef I_COMPONENT
 	//I Component
 	p->isum+=err;
 	if(p->isum >= p->ilimit){
@@ -67,8 +70,9 @@ void pid_update(struct pid *p) {
 	}
 
 	corr += p->isum * p->igain;
+#endif
 
-	printf("\n Corr %f mtarget: %ld", corr, p->mtarget);
+	//printf("\n Corr %f mtarget: %ld", corr, p->mtarget);
 	//printf("\n Pid at update with %e power Sensor at %ld target at %ld", corr, enc, p->mtarget);
 	//writeDebugStreamLine("Powering motor at %d", corr);
 	//motor[p->mport] = corr;
