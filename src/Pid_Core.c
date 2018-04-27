@@ -2,10 +2,13 @@
 
 //#include "main.h"
 #include "Sensors.h"
-
 #include "Pid_Core.h"
+#include "Math.h"
 
 TaskHandle pid_loop;
+
+//Internal handeling of potentiometers
+void handlePot(struct pid *p);
 
 //Initalizes basic variables for the pid struct provided.
 void pid_init(struct pid *p) {
@@ -42,7 +45,7 @@ void pid_update(struct pid *p) {
 	//Calculate initial values
 	//int enc = nMotorEncoder[p->mport];
     int enc = readValue(p->sensor);
-
+	printf("ENC: %d", enc);
 	//printf("enc %d", enc);
 
 	//Calculate err using the modified enc value and the target.
@@ -52,7 +55,6 @@ void pid_update(struct pid *p) {
 	float corr = err * p->pgain;
 
 	//I Component
-#if 1
 	p->isum+=err;
 	if(p->isum >= p->ilimit){
 		p->isum = p->ilimit;
@@ -65,9 +67,8 @@ void pid_update(struct pid *p) {
 	}
 
 	corr += p->isum * p->igain;
-#endif
 
-printf("\n Corr %f", corr);
+	printf("\n Corr %f mtarget: %ld", corr, p->mtarget);
 	//printf("\n Pid at update with %e power Sensor at %ld target at %ld", corr, enc, p->mtarget);
 	//writeDebugStreamLine("Powering motor at %d", corr);
 	//motor[p->mport] = corr;
@@ -85,6 +86,15 @@ void pid_init_all()
 {
 	for (int i = 0; i < pid_count; ++i) {
 		pid_init(pid_arr[i]);
+		if(pid_arr[i]->sensor->sensorType == POT){
+			if(pid_arr[i]->min == 0){
+				pid_arr[i]->min = 0;
+			}else if(pid_arr[i]->max == 0){
+				pid_arr[i]->max = 4095;
+			}
+			pid_arr[i]->igain = 0;
+			pid_arr[i]->pgain = 0.3;
+		}
 	}
 }
 
