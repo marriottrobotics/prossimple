@@ -10,6 +10,7 @@
 
 #define P_COMPONENT
 #define I_COMPONENT
+#define D_COMPONENT
 
 //The task for the loop running
 extern TaskHandle pid_loop;
@@ -25,6 +26,9 @@ struct pid {
 	float isum;
 	float igain;
 	long ilimit;
+
+    long lastpos;
+    float dgain;
 
 	short corrcap;
 	bool enable;

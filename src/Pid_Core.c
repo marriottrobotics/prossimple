@@ -24,6 +24,8 @@ void pid_init(struct pid *p) {
 	p->igain = 0.001;
 	p->isum = 0;
 	p->ilimit = 1000;
+	p->lastpos = 0;
+	p->dgain = 0;
 }
 
 //Checks if the pid motor is close enough to it's target to be within an acceptable range.
@@ -72,6 +74,12 @@ void pid_update(struct pid *p) {
 	corr += p->isum * p->igain;
 #endif
 
+#ifdef D_COMPONENT
+	float dAvg = p->lastpos - enc;
+	corr += dAvg * p->dgain;
+
+	p->lastpos = enc;
+#endif
 	//printf("\n Corr %f mtarget: %ld", corr, p->mtarget);
 	//printf("\n Pid at update with %e power Sensor at %ld target at %ld", corr, enc, p->mtarget);
 	//writeDebugStreamLine("Powering motor at %d", corr);
