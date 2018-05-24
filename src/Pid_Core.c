@@ -47,7 +47,7 @@ void pid_update(struct pid *p) {
 	//Calculate initial values
 	//int enc = nMotorEncoder[p->mport];
     int enc = readValue(p->sensor);
-	printf("ENC: %d", enc);
+	//printf("ENC: %d", enc);
 	//printf("enc %d", enc);
 
 	//Calculate err using the modified enc value and the target.

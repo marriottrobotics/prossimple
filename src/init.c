@@ -42,7 +42,7 @@ void initialize() {
     printf("Ime system initalized with %d imes", imeCount);
 
     debugPid.mport = 2;
-    debugPid.sensor = pot(1);
+    debugPid.sensor = ime(0);
 
     pid_arr[pid_count++] = &debugPid;
 
