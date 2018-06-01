@@ -53,3 +53,8 @@ dkms.conf
 
 #pros stuff
 bin/*
+
+#C Built Files
+*.o
+*.elf
+*.bin
