@@ -32,7 +32,6 @@
 void operatorControl() {
 	while (1) {
 		DEBUG_PID = joystickGetAnalog(1, 1);
-		//printf("\n dest = %d", joystickGetAnalog(1, 1));
 		delay(20);
 	}
 }
