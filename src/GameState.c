@@ -3,7 +3,8 @@
 bool startRed;
 bool startTop;
 
-/*Call in the initalization if sensors are used to define these values.*/
+/*Call in the initalization if sensors are used to define these values.
+* if this method isn't called, then nothing is going to work.*/
 void init(bool colour, bool end){
   startRed = colour;
   startTop = end;

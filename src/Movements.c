@@ -2,6 +2,7 @@
 
 #include "Movement.h"
 #include "Pid_Core.h"
+#include "GameState.h"
 
 struct pid *leftDrive;
 struct pid *rightDrive;
@@ -20,9 +21,22 @@ void driveBackwards(int ticksIn){
   rightDrive->mtarget -= ticksIn;
 }
 
-void turnUp(int ticks){ //Todo, complete with more info.
-
+void turnUp(int ticks){
+  if(isStartRed()){
+    rightDrive->mtarget += ticks;
+    leftDrive->mtarget -= ticks;
+  }else if(isStartBlue()){
+    rightDrive->mtarget -= ticks;
+    leftDrive->mtarget += ticks;
+  }
 }
-void turnDown(int ticks){ //Todo, complete with more info.
 
+void turnDown(int ticks){
+  if(isStartRed()){
+    rightDrive->mtarget -= ticks;
+    leftDrive->mtarget += ticks;
+  }else if(isStartBlue()){
+    rightDrive->mtarget += ticks;
+    leftDrive->mtarget -= ticks;
+  }
 }

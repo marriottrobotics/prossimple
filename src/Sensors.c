@@ -1,10 +1,6 @@
 /**The Sensor Handling in it's entirty
 Please call imeInitalizeAll() first.*/
 
-//TODO Implement in Pid_Core
-
-//FIXME prevent duplication
-
 //#include "main.h"
 #include <API.h>
 #include "Sensors.h"
@@ -30,7 +26,6 @@ int readValue(struct Sensor *input){
     return value;
 }
 
-//TODO Generation and init methods for ime, qenc, and pot
 struct Sensor *pot(int port){
     struct Sensor ns;
     ns.port = port;
