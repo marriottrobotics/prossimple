@@ -16,9 +16,7 @@
 extern TaskHandle pid_loop;
 
 struct pid {
-    /**TODO Sensor Integration*/
-    //int ime_port; //TODO Different sensors.
-    struct Sensor *sensor;
+  struct Sensor *sensor;
 	int mport;
 	long mtarget;
 	float pgain;

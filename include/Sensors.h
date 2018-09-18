@@ -3,7 +3,11 @@
 #include <API.h>
 
 #define IME 0
+#define IME_TORQUE 627.2
+#define IME_SPEED 392
+#define IME_TURBO 261.333
 #define QENC 1
+#define QENC_ALL 360
 #define POT 2
 
 struct Sensor{
