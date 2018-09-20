@@ -9,6 +9,8 @@ struct pid *rightDrive;
 
 float ticksPerCm;
 
+float ticksPerDegree;
+
 void waitForTarget(struct pid *left, struct pid *right);
 
 void setupMovements(struct pid *left, struct pid *right, float ticksPerRot, float diameter){
@@ -23,6 +25,11 @@ void defineDriveMotors(struct pid *left, struct pid *right){
 
 void defineWheels(float ticksPerRot, float diameter){
   ticksPerCm = ticksPerRot / diameter * PI;
+}
+
+void defineRobot(float wheelDiameter, float robotDiameter, float ticksPerRot){
+  float top = (robotDiameter * PI) / (wheelDiameter * PI) * ticksPerRot;
+  ticksPerDegree = top/360.0;
 }
 
 //Positive is forwards, negative is backwards.
@@ -78,6 +85,43 @@ void turnDown(int ticks, bool waitTarget){
   }else if(isStartBlue()){
     rightDrive->mtarget += ticks;
     leftDrive->mtarget -= ticks;
+  }
+
+  if(waitTarget){
+    waitForTarget(leftDrive, rightDrive);
+  }
+}
+
+void turnDegrees(float degrees, bool waitTarget){
+  rightDrive->mtarget += degrees * ticksPerDegree;
+  leftDrive->mtarget -= degrees * ticksPerDegree;
+
+  if(waitTarget){
+    waitForTarget(leftDrive, rightDrive);
+  }
+}
+
+void turnUpDeg(float degrees, bool waitTarget){
+  if(isStartRed()){
+    rightDrive->mtarget += degrees*ticksPerDegree;
+    leftDrive->mtarget -= degrees*ticksPerDegree;
+  }else if(isStartBlue()){
+    rightDrive->mtarget -= degrees*ticksPerDegree;
+    leftDrive->mtarget += degrees*ticksPerDegree;
+  }
+
+  if(waitTarget){
+    waitForTarget(leftDrive, rightDrive);
+  }
+}
+
+void turnDownDeg(float degrees, bool waitTarget){
+  if(isStartRed()){
+    rightDrive->mtarget -= degrees*ticksPerDegree;
+    leftDrive->mtarget += degrees*ticksPerDegree;
+  }else if(isStartBlue()){
+    rightDrive->mtarget += degrees*ticksPerDegree;
+    leftDrive->mtarget -= degrees*ticksPerDegree;
   }
 
   if(waitTarget){

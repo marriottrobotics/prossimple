@@ -13,6 +13,7 @@ void setupMovements(struct pid *left, struct pid *right, float ticksPerRot, floa
 void defineDriveMotors(struct pid *left, struct pid *right);
 //Helper method to tell the movement what the wheel dimensions are without including the drive motors.
 void defineWheels(float ticksPerRot, float diameter);
+void defineRobot(float wheelDiameter, float robotDiameter);
 
 /*Moves the robot a distance based on the ticks imput.
 * Variable:
@@ -46,3 +47,14 @@ void turnUp(int ticks, bool waitTarget);
 *   Requires game state to be properly configured.
 */
 void turnDown(int ticks, bool waitTarget);
+
+void turnDegrees(float degrees, bool waitTarget);
+
+/*Turns the robot a defined number of degrees "up" towards the top of the game board.
+*   Requires game state to be properly configured.
+*/
+void turnUpDeg(float degrees, bool waitTarget);
+/*Turns the robot a defined number of degrees "down" towards the top of the game board.
+*   Requires game state to be properly configured.
+*/
+void turnDownDeg(float degrees, bool waitTarget);
