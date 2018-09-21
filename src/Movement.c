@@ -4,8 +4,10 @@
 #include "Pid_Core.h"
 #include "GameState.h"
 
-struct pid *leftDrive;
-struct pid *rightDrive;
+struct pid *leftDriveA;
+struct pid *leftDriveB;
+struct pid *rightDriveA;
+struct pid *rightDriveB;
 
 float ticksPerCm;
 
@@ -13,14 +15,17 @@ float ticksPerDegree;
 
 void waitForTarget(struct pid *left, struct pid *right);
 
-void setupMovements(struct pid *left, struct pid *right, float ticksPerRot, float diameter){
-  defineDriveMotors(left, right);
+void setupMovements(struct pid *left1, struct pid *left2, struct pid *right1, struct pid *right2, float ticksPerRot, float diameter, float robotDiameter){
+  defineDriveMotors(left1, left2, right1, right2);
   defineWheels(ticksPerRot, diameter);
+  defineRobot(diameter, robotDiameter, ticksPerRot);
 }
 
-void defineDriveMotors(struct pid *left, struct pid *right){
-  leftDrive = left;
-  rightDrive = right;
+void defineDriveMotors(struct pid *left1, struct pid *left2, struct pid *right1, struct pid *right2){
+  leftDriveA = left1;
+  leftDriveB = left2;
+  rightDriveA = right1;
+  rightDriveB = right2;
 }
 
 void defineWheels(float ticksPerRot, float diameter){
@@ -38,94 +43,118 @@ void drive(int ticks, bool waitTarget){
 }
 
 void driveForward(int ticksIn, bool waitTarget){
-  leftDrive->mtarget += ticksIn;
-  rightDrive->mtarget += ticksIn;
+  leftDriveA->mtarget += ticksIn;
+  leftDriveB->mtarget += ticksIn;
+  rightDriveA->mtarget += ticksIn;
+  rightDriveB->mtarget += ticksIn;
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void driveBackwards(int ticksIn, bool waitTarget){
-  leftDrive->mtarget -= ticksIn;
-  rightDrive->mtarget -= ticksIn;
+  leftDriveA->mtarget -= ticksIn;
+  leftDriveB->mtarget -= ticksIn;
+  rightDriveA->mtarget -= ticksIn;
+  rightDriveB->mtarget -= ticksIn;
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void driveCm(float cm, bool waitTarget){
-  leftDrive->mtarget += cm*ticksPerCm;
-  rightDrive->mtarget -= cm*ticksPerCm;
+  leftDriveA->mtarget += cm*ticksPerCm;
+  leftDriveB->mtarget += cm*ticksPerCm;
+  rightDriveA->mtarget -= cm*ticksPerCm;
+  rightDriveB->mtarget -= cm*ticksPerCm;
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void turnUp(int ticks, bool waitTarget){
   if(isStartRed()){
-    rightDrive->mtarget += ticks;
-    leftDrive->mtarget -= ticks;
+    rightDriveA->mtarget += ticks;
+    rightDriveB->mtarget += ticks;
+    leftDriveA->mtarget -= ticks;
+    leftDriveB->mtarget -= ticks;
   }else if(isStartBlue()){
-    rightDrive->mtarget -= ticks;
-    leftDrive->mtarget += ticks;
+    rightDriveA->mtarget -= ticks;
+    rightDriveB->mtarget -= ticks;
+    leftDriveA->mtarget += ticks;
+    leftDriveB->mtarget += ticks;
   }
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void turnDown(int ticks, bool waitTarget){
   if(isStartRed()){
-    rightDrive->mtarget -= ticks;
-    leftDrive->mtarget += ticks;
+    rightDriveA->mtarget -= ticks;
+    rightDriveB->mtarget -= ticks;
+    leftDriveA->mtarget += ticks;
+    leftDriveB->mtarget += ticks;
   }else if(isStartBlue()){
-    rightDrive->mtarget += ticks;
-    leftDrive->mtarget -= ticks;
+    rightDriveA->mtarget += ticks;
+    rightDriveB->mtarget += ticks;
+    leftDriveA->mtarget -= ticks;
+    leftDriveB->mtarget -= ticks;
   }
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void turnDegrees(float degrees, bool waitTarget){
-  rightDrive->mtarget += degrees * ticksPerDegree;
-  leftDrive->mtarget -= degrees * ticksPerDegree;
+  rightDriveA->mtarget += degrees * ticksPerDegree;
+  rightDriveB->mtarget += degrees * ticksPerDegree;
+  leftDriveA->mtarget -= degrees * ticksPerDegree;
+  leftDriveB->mtarget -= degrees * ticksPerDegree;
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void turnUpDeg(float degrees, bool waitTarget){
   if(isStartRed()){
-    rightDrive->mtarget += degrees*ticksPerDegree;
-    leftDrive->mtarget -= degrees*ticksPerDegree;
+    rightDriveA->mtarget += degrees*ticksPerDegree;
+    rightDriveB->mtarget += degrees*ticksPerDegree;
+    leftDriveA->mtarget -= degrees*ticksPerDegree;
+    leftDriveB->mtarget -= degrees*ticksPerDegree;
   }else if(isStartBlue()){
-    rightDrive->mtarget -= degrees*ticksPerDegree;
-    leftDrive->mtarget += degrees*ticksPerDegree;
+    rightDriveA->mtarget -= degrees*ticksPerDegree;
+    rightDriveB->mtarget -= degrees*ticksPerDegree;
+    leftDriveA->mtarget += degrees*ticksPerDegree;
+    leftDriveB->mtarget += degrees*ticksPerDegree;
   }
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 
 void turnDownDeg(float degrees, bool waitTarget){
   if(isStartRed()){
-    rightDrive->mtarget -= degrees*ticksPerDegree;
-    leftDrive->mtarget += degrees*ticksPerDegree;
+    rightDriveA->mtarget -= degrees*ticksPerDegree;
+    rightDriveB->mtarget -= degrees*ticksPerDegree;
+    leftDriveA->mtarget += degrees*ticksPerDegree;
+    leftDriveB->mtarget += degrees*ticksPerDegree;
   }else if(isStartBlue()){
-    rightDrive->mtarget += degrees*ticksPerDegree;
-    leftDrive->mtarget -= degrees*ticksPerDegree;
+    rightDriveA->mtarget += degrees*ticksPerDegree;
+    rightDriveB->mtarget += degrees*ticksPerDegree;
+    leftDriveA->mtarget -= degrees*ticksPerDegree;
+    leftDriveB->mtarget -= degrees*ticksPerDegree;
   }
 
   if(waitTarget){
-    waitForTarget(leftDrive, rightDrive);
+    waitForTarget(leftDriveA, rightDriveA);
   }
 }
 

@@ -8,12 +8,12 @@
 #define PI 3.14159265359
 
 //Allows the user to instruct the movement what size wheels it will be using as well as what motors are for
-void setupMovements(struct pid *left, struct pid *right, float ticksPerRot, float diameter);
+void setupMovements(struct pid *left1, struct pid *left2, struct pid *right1, struct pid *right2, float ticksPerRot, float diameter, float robotDiameter);
 //Helper method to tell the movement what the drive motors are without including wheel information.
-void defineDriveMotors(struct pid *left, struct pid *right);
+void defineDriveMotors(struct pid *left1, struct pid *left2, struct pid *right1, struct pid *right2);
 //Helper method to tell the movement what the wheel dimensions are without including the drive motors.
 void defineWheels(float ticksPerRot, float diameter);
-void defineRobot(float wheelDiameter, float robotDiameter);
+void defineRobot(float wheelDiameter, float robotDiameter, float ticksPerRot);
 
 /*Moves the robot a distance based on the ticks imput.
 * Variable:
