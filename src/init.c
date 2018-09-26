@@ -11,6 +11,8 @@
  */
 
 #include "main.h"
+#include "Movement.h"
+#include "GameState.h"
 
 /*
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
@@ -41,12 +43,14 @@ void initialize() {
     int imeCount = imeInitializeAll();
     printf("Ime system initalized with %d imes", imeCount);
 
-    debugPid.mport = 2;
-    debugPid.sensor = ime(0);
-
+    demoPid.mport = 2;
+    demoPid.sensor = ime(0);
     pid_arr[pid_count++] = &debugPid;
 
     pid_init_all();
     /*The last thing that should happen, the repeating task starts.*/
     pid_loop = taskRunLoop(pid_run_loops, 10);
+
+    //setupMovements();
+    //initGameState()
 }

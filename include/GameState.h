@@ -7,7 +7,7 @@
 #define TOP true; //Indicates the robot is on the "top" starting tile which is arbitrarly chosen.
 #define BOTTOM false; //Indicates the robot is on the "bottom" starting tile which is arbitrarly chosen.
 
-void init(bool colour, bool end); //If you use the macros with this method it makes sense with natural language.
+void initGameState(bool colour, bool end); //If you use the macros with this method it makes sense with natural language.
 
 bool isStartRed(); //If the starting side is red, this is true. Otherwise it's false.
 bool isStartBlue(); //If the starting side is blue, this is true. Otherwise it's false.

@@ -40,10 +40,10 @@ extern "C" {
 // Prototypes for initialization, operator control and autonomous
 
 //Pids for control
-struct pid debugPid;
+struct pid demoPid;
 
 //Convienience for accessing pid targets
-#define DEBUG_PID debugPid.mtarget
+#define DEMO_PID debugPid.mtarget
 
 /**
  * Runs the user autonomous code. This function will be started in its own task with the default

@@ -108,6 +108,8 @@ void pid_init_all()
 			pid_arr[i]->pgain = 0.3;
 		}
 	}
+
+	printf("Pid system init with %d pid loops.", pid_count);
 }
 
 //A task to be run on the scheduler
