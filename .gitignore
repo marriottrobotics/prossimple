@@ -58,3 +58,6 @@ bin/*
 *.o
 *.elf
 *.bin
+
+#pros library stuff
+libemssimple-template/
