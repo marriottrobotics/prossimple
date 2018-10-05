@@ -1,7 +1,7 @@
 #pragma once
 
 #include <API.h>
-#include "Pid_Core.h"
+#include "PidCore.h"
 #include "GameState.h"
 
 //Pi, to probably more decimal places than we'll need.

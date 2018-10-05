@@ -60,4 +60,4 @@ bin/*
 *.bin
 
 #pros library stuff
-libemssimple-template/
+prossimple-template/

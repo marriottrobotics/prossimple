@@ -2,10 +2,10 @@
 
 #include <API.h>
 
-#define RED true; //Should be used if the robot is on the red alliance.
-#define BLUE false; //Should be used if the robot is on the blue alliance.
-#define TOP true; //Indicates the robot is on the "top" starting tile which is arbitrarly chosen.
-#define BOTTOM false; //Indicates the robot is on the "bottom" starting tile which is arbitrarly chosen.
+#define RED true //Should be used if the robot is on the red alliance.
+#define BLUE false //Should be used if the robot is on the blue alliance.
+#define TOP true //Indicates the robot is on the "top" starting tile which is arbitrarly chosen.
+#define BOTTOM false //Indicates the robot is on the "bottom" starting tile which is arbitrarly chosen.
 
 void initGameState(bool colour, bool end); //If you use the macros with this method it makes sense with natural language.
 

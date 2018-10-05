@@ -2,7 +2,7 @@
 
 //#include "main.h"
 #include "Sensors.h"
-#include "Pid_Core.h"
+#include "PidCore.h"
 #include "Math.h"
 
 TaskHandle pid_loop;

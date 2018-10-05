@@ -27,7 +27,7 @@
 
 #include <API.h>
 
-#include "Pid_Core.h"
+#include "PidCore.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

@@ -1,10 +1,10 @@
-LIBNAME=libemssimple
-VERSION=0.0.1
+LIBNAME=prossimple
+VERSION=1.0.1
 
 # extra files (like header files)
-TEMPLATEFILES = include/GameState.h include/Movement.h include/Pid_Core.h include/Sensors.h
+TEMPLATEFILES = include/GameState.h include/Movement.h include/PidCore.h include/Sensors.h
 # basename of the source files that should be archived
-TEMPLATEOBJS = GameState Movement Pid_Core Sensors
+TEMPLATEOBJS = GameState Movement PidCore Sensors
 
 TEMPLATE=$(ROOT)/$(LIBNAME)-template
 

@@ -1,7 +1,7 @@
 #include <API.h>
 
 #include "Movement.h"
-#include "Pid_Core.h"
+#include "PidCore.h"
 #include "GameState.h"
 
 struct pid *leftDriveA;
